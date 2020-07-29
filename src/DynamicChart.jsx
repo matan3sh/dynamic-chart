@@ -6,14 +6,15 @@ const DynamicChart = () => {
   const [chartData, setChartData] = useState({});
 
   const chart = () => {
-    let empSal = [];
-    let empAge = [];
+    let movieName = [];
+    let movieRating = [];
     axios
-      .get('http://dummy.restapiexample.com/api/v1/employees')
+      .get('/movies.json')
       .then((res) => {
-        for (const dataObj of res.data.data) {
-          empSal.push(parseInt(dataObj.employee_salary));
-          empAge.push(parseInt(dataObj.employee_age));
+        console.log(res.data);
+        for (const dataObj of res.data) {
+          movieName.push(dataObj.title);
+          movieRating.push(parseInt(dataObj.rating));
         }
       })
       .catch((err) => {
@@ -21,11 +22,11 @@ const DynamicChart = () => {
       });
 
     setChartData({
-      labels: empAge,
+      labels: movieName,
       datasets: [
         {
-          label: 'level of thickness',
-          data: empSal,
+          label: 'Level of Rating',
+          data: movieRating,
           backgroundColor: ['rgba(75,192,192,0.6)'],
           borderWidth: 4
         }
